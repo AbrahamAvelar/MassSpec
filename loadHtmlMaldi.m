@@ -1,4 +1,22 @@
-function [HtmlData, MatrixScores, AllStrainNames, MatrixScoresRank] = loadHtmlMaldi(Archivo) %"C:\Users\jabra\Downloads\LevadurasMezcalerasCINVESTAV20210509Extraccionesselec45B-52B.csv";
+function [HtmlData, MatrixScores, AllStrainNames, MatrixScoresRank] = loadHtmlMaldi(Archivo)
+% [HtmlData, MatrixScores, AllStrainNames, MatrixScoresRank] = loadHtmlMaldi(Archivo) 
+%
+% Recibe un archivo .csv que se hizo desde los htmls del brucker maldi
+% Yo los convertí con  https://www.convertcsv.com/html-table-to-csv.htm
+% Abre con xlsread y también con csvimport. Usa los ‘Analyte Name:’ para
+% irse bajando los HtmlData.Names y los NtmlData.Score de cada analito 
+% del archivo. 
+%
+% También regresa otros tres outputs:
+% AllStrainNames tiene todos los nombres que salieron como top-10 hit en
+% al menos uno de los analitos. Están en el mismo orden que las siguientes
+% dos matrices
+% MatrixScores es una matriz que tiene numero de especies en un eje 
+% y los analitos ordenados y en el otro eje con el valor del score 
+% que que se asignó para cada especie-analito
+% MatrixScoresRank tiene una matriz del mismo tamaño que MatrixScores
+% pero en vez de guardar el valor del score guarda el rank del 1 al 10.
+
 html24x=Archivo%
 [numC, txtC,rawC]=xlsread(html24x);
 firstwell=find(strcmp(txtC(:,2), 'A1'));
@@ -58,4 +76,5 @@ for i= 1:length(HtmlData) %
         MatrixScoresRank(x,i)=j;
     end
 end
+
 
